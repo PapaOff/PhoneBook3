@@ -14,7 +14,7 @@ RUN npm install
 COPY . .
 
 # Make port 8080 available to the world outside this container
-EXPOSE 8080
+EXPOSE 8083
 
 # Run the app when the container launches
 CMD ["node", "server.js"]
