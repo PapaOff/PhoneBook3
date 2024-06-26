@@ -49,7 +49,7 @@ app.post('/upload', async (req, res) => {
 app.get('/images/:userId', async (req, res) => {
   const userId = req.params.userId;
   try {
-    const [files] = await bucket.getFiles({ prefix: '${userId}/' });
+    const [files] = await bucket.getFiles({ prefix: `${userId}/` });
     const urls = await Promise.all(files.map(file => file.getSignedUrl({
       action: 'read',
       expires: '03-09-2491'
