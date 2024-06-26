@@ -18,12 +18,16 @@ app.use(cors());
 app.use(fileUpload());
 
 app.post('/upload', async (req, res) => {
+  const userId = req.body.userId;
+  if (!userId) {
+    return res.status(400).send('User ID is required.');
+  }
   if (!req.files || !req.files.image) {
     return res.status(400).send('No file uploaded.');
   }
 
   const image = req.files.image;
-  const blob = bucket.file(`demo1/${uuidv4()}_${image.name}`);
+  const blob = bucket.file(`${userId}/${uuidv4()}_${image.name}`);
   const blobStream = blob.createWriteStream({
     metadata: {
       contentType: image.mimetype,
@@ -42,9 +46,10 @@ app.post('/upload', async (req, res) => {
   blobStream.end(image.data);
 });
 
-app.get('/images', async (req, res) => {
+app.get('/images/:userId', async (req, res) => {
+  const userId = req.params.userId;
   try {
-    const [files] = await bucket.getFiles({ prefix: 'demo1/' });
+    const [files] = await bucket.getFiles({ prefix: '${userId}/' });
     const urls = await Promise.all(files.map(file => file.getSignedUrl({
       action: 'read',
       expires: '03-09-2491'
