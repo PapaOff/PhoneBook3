@@ -8,7 +8,7 @@ export async function uploadImage(userId, imageFile) {
     formData.append('userId', userId);
   
     try {
-      const response = await fetch('http://localhost:8080/upload', {
+      const response = await fetch('http://localhost:8083/upload', {
         method: 'POST',
         body: formData,
       });

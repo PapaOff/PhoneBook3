@@ -61,7 +61,7 @@ app.get('/images/:userId', async (req, res) => {
   }
 });
 
-const PORT = 8080;
+const PORT = 8083;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
